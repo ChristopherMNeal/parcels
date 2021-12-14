@@ -12,7 +12,7 @@ end
 get('/parcels') do
   # binding.pry
   @parcels = Parcel.all
-  erb(:parcels) # need this?
+  erb(:parcels)
 end
 
 get('/parcels/new') do
@@ -26,7 +26,11 @@ end
 
 post('/parcels') do
   name = params[:parcel_name]
-  parcel = Parcel.new(name, nil)
+  weight = params[:parcel_weight]
+  height = params[:parcel_height]
+  length = params[:parcel_length]
+  width = params[:parcel_width]
+  parcel = Parcel.new(name, nil, weight, length, width, height)
   parcel.save()
   @parcels = Parcel.all()
   erb(:parcels)
@@ -39,7 +43,7 @@ end
 
 patch('/parcels/:id') do
   @parcel = Parcel.find(params[:id].to_i())
-  @parcel.update(params[:name])
+  @parcel.update(params[:name, :width, :height, :weight, :length])
   @parcels = Parcel.all
   erb(:parcels)
 end
